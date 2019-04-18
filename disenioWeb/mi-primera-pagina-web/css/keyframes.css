@@ -1,0 +1,21 @@
+@keyframes ewk_keyframes_aparecer_de_arriba {
+    from {
+        opacity: 0;
+        top: -150px;
+    }
+    to {
+        opacity: 1;
+        top: 0;
+    }
+}
+
+@-webkit-keyframes ewk_keyframes_aparecer_de_arriba {
+    from {
+        opacity: 0;
+        top: -150px;
+    }
+    to {
+        opacity: 1;
+        top: 0;
+    }
+}

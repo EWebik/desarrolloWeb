@@ -1,0 +1,18 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg">
+<metadata>Copyright (C) 2019 by original authors @ fontello.com</metadata>
+<defs>
+<font id="fontello" horiz-adv-x="1000" >
+<font-face font-family="fontello" font-weight="400" font-stretch="normal" units-per-em="1000" ascent="850" descent="-150" />
+<missing-glyph horiz-adv-x="1000" />
+<glyph glyph-name="linkedin" unicode="&#x50;" d="M195 501v-553h-184v553h184z m12 171q0-41-29-68t-75-27h-1q-46 0-74 27t-28 68q0 41 29 68t75 27 74-27 29-68z m650-407v-317h-183v296q0 59-23 92t-71 33q-35 0-58-19t-36-48q-6-17-6-45v-309h-184q1 223 1 361t0 165l-1 27h184v-80h-1q11 18 23 31t31 29 49 24 64 9q95 0 153-63t58-186z" horiz-adv-x="857.1" />
+
+<glyph glyph-name="twitter" unicode="&#xf099;" d="M904 622q-37-54-90-93 0-8 0-23 0-73-21-145t-64-139-103-117-144-82-181-30q-151 0-276 81 19-2 43-2 126 0 224 77-59 1-105 36t-64 89q19-3 34-3 24 0 48 6-63 13-104 62t-41 115v2q38-21 82-23-37 25-59 64t-22 86q0 49 25 91 68-83 164-133t208-55q-5 21-5 41 0 75 53 127t127 53q79 0 132-57 61 12 115 44-21-64-80-100 52 6 104 28z" horiz-adv-x="928.6" />
+
+<glyph glyph-name="youtube-play" unicode="&#xf16a;" d="M397 221l270 139-270 141v-280z m103 481q94 0 181-3t128-5l41-2q0 0 9-1t13-2 13-2 16-5 16-7 17-11 16-15q4-3 9-10t16-33 15-56q4-36 7-76t3-64v-98q1-81-10-162-4-30-14-55t-18-35l-8-9q-7-8-16-15t-17-10-16-7-16-5-13-2-13-2-9-1q-140-11-350-11-115 2-201 4t-111 4l-28 3-20 2q-20 3-30 5t-29 12-31 23q-4 3-9 10t-16 33-15 56q-4 36-7 76t-3 64v98q-1 81 10 162 4 31 14 55t18 35l8 9q8 9 16 15t17 11 16 7 16 5 13 2 13 2 9 1q140 10 350 10z" horiz-adv-x="1000" />
+
+<glyph glyph-name="facebook-squared" unicode="&#xf308;" d="M696 779q67 0 114-48t47-113v-536q0-66-47-113t-114-48h-104v333h111l16 129h-127v83q0 31 13 46t51 16l68 1v115q-35 5-100 5-75 0-121-44t-45-127v-95h-112v-129h112v-333h-297q-67 0-114 48t-47 113v536q0 66 47 113t114 48h535z" horiz-adv-x="857.1" />
+</font>
+</defs>
+</svg>

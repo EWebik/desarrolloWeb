@@ -1,0 +1,104 @@
+.ewk_cont_banner{
+    height: 100vh;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-image: url("../img/arq1.jpg");
+}
+
+.ewk_sobra{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    -ms-transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%,-50%);
+    padding: 20px;
+    width: 80%;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: #fff;
+    margin: auto;
+}
+
+.ewk_sobra hr{
+    border-top: 1px solid #fff;
+}
+
+.ewk_sobra h1{
+    font-size: 8vw;
+    margin-bottom: 10px;
+}
+
+.ewk_sobra p{
+    font-size: 4vw;
+    margin-bottom: 10px;
+}
+
+.ewk_cont_banner_link{
+    margin: 15px;
+    position: relative;
+}
+
+.ewk_cont_banner_link a{
+    position: relative;
+    display: inline-block;
+    color: #fff;
+    text-decoration: none;
+    border: 1px solid #fff;
+    padding: 1px;
+    margin-bottom: 5px;
+    width: 150px;
+}
+
+.ewk_cont_banner_link a:hover{
+    background-color: #fff;
+    color: #111;
+}
+
+.ewk_banner_link{
+    opacity: 0;
+    animation: ewk_keyframes_aparecer_de_arriba 1s;
+    -webkit-animation: ewk_keyframes_aparecer_de_arriba 1s;
+    animation-fill-mode: forwards;
+}
+
+.ewk_banner_link_1{
+    opacity: 0;
+    animation: ewk_keyframes_aparecer_de_arriba 1s;
+    -webkit-animation: ewk_keyframes_aparecer_de_arriba 1s;
+    animation-fill-mode: forwards;
+    animation-delay: 0.5s;
+}
+
+.ewk_banner_link_2{
+    opacity: 0;
+    animation: ewk_keyframes_aparecer_de_arriba 1s;
+    -webkit-animation: ewk_keyframes_aparecer_de_arriba 1s;
+    animation-fill-mode: forwards;
+    animation-delay: 1s;
+}
+
+.ewk_cont_banner_sec_3{
+    height: 100vh;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-image: url("../img/arq2.jpg");
+    position: relative;
+    padding: 10%;
+    margin-top: 200px;
+    margin-bottom: 100px;
+}
+
+.ewk_cont_banner_sec_3 .row{
+    background-color: rgba(1, 1, 1, 0.7);
+    color: #fff;
+    padding: 2%;
+}
+
+.ewk_cont_img{
+    padding: 5%;
+}
