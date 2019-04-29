@@ -2,4 +2,4 @@
 include "./mysql.php";
 
 $oMySql = new MySQL();
-$oMySql->conBDOB();
+$oMySql->execStrQueryPDO($oMySql->sqlTabla);
