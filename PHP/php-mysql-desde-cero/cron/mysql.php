@@ -26,6 +26,13 @@ class MySQL
         )
     ";
 
+    public $strInsert = "
+    insert into resumen_productos
+        (nombre,categoria,precio,cantidad_vendidos,en_almacen,fecha_alta)
+    values
+        ('producto-1','categoria-2', 199.00, 30, 100,'2019-01-01')
+    ";
+
     public function __construct()
     {
         global $usuarioBD, $passBD, $ipBD, $nombreBD;
@@ -84,14 +91,17 @@ class MySQL
      */
     public function execStrQueryOB($query)
     {
+        $id;
         if ($this->conBDOB() && $query != '') {
             if ($this->oConBD->query($query) === true) {
+                $id = $this->oConBD->insert_id;
                 echo "Consulta ejecutada \n";
             } else {
                 echo "Error al ejecutar consulta " . $this->oConBD->error . "\n";
             }
             $this->oConBD->close();
         }
+        return $id;
     }
 
     /**
@@ -99,14 +109,17 @@ class MySQL
      */
     public function execStrQueryP($query)
     {
+        $id;
         if ($this->conBDP() && $query != '') {
             if (mysqli_query($this->oConBD, $query)) {
+                $id = $this->oConBD->insert_id;
                 echo "Consulta ejecutada \n";
             } else {
                 echo "Error al ejecutar consulta " . mysqli_error($this->oConBD) . "\n";
             }
             mysqli_close($this->oConBD);
         }
+        return $id;
     }
     /**
      * Ejecuta un query con la sintaxis PDO
@@ -114,9 +127,12 @@ class MySQL
     public function execStrQueryPDO($query)
     {
         try {
+            $id;
             if ($this->conBDPDO() && $query != '') {
                 $this->oConBD->exec($query);
+                $id = $this->oConBD->lastInsertId();
                 echo "Consulta ejecutada \n";
+                return $id;
             }
         } catch (PDOException $e) {
             echo "MySQL.execStrQueryPDO --Error-- " . $e->getMessage() . "\n";
