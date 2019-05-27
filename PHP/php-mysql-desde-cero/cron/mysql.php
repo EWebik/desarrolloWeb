@@ -26,11 +26,19 @@ class MySQL
         )
     ";
 
+  
+    public $strInsert_old = "
+		insert into resumen_productos
+			(nombre,categoria,precio,cantidad_vendidos,en_almacen,fecha_alta)
+		values
+			('producto-1','categoria-2', 199.00, 30, 100,'2019-01-01')
+        ";
+
     public $strInsert = "
     insert into resumen_productos
         (nombre,categoria,precio,cantidad_vendidos,en_almacen,fecha_alta)
     values
-        ('producto-1','categoria-2', 199.00, 30, 100,'2019-01-01')
+        (?,?,?,?,?,?)
     ";
 
     public function __construct()
@@ -138,4 +146,104 @@ class MySQL
             echo "MySQL.execStrQueryPDO --Error-- " . $e->getMessage() . "\n";
         }
     }
+
+    
+    /**
+     * Sintaxis Objetos
+     * file_get_contents - permite leer un json
+     * json_decode - Convierte un string en un JSON
+     */
+    public function insertarOB()
+    {
+        $json = file_get_contents('./datos.json');
+        $jsonDatos = json_decode($json, true);
+        //print_r($jsonDatos);
+        if ($this->conBDOB()) {
+            //echo ($this->strInsert) ;
+            //Disminuye el riesgo de inyección sql
+            $pQuery = $this->oConBD->prepare($this->strInsert);
+            foreach ($jsonDatos as $id => $valor) {
+                $pQuery->bind_param("ssdiis"
+                    , $valor["nombre"]
+                    , $valor["categoria"]
+                    , $valor["precio"]
+                    , $valor["cantidad_vendidos"]
+                    , $valor["en_almacen"]
+                    , $valor["fecha_alta"]
+                );
+                $pQuery->execute();
+                //comprobando insert recibiendo el ultimo ID
+                $idInsertado = $this->oConBD->insert_id;
+                echo ("Nombre: " . $valor["nombre"] . ", Ultimo ID: " . $idInsertado . "\n");
+            }
+            $pQuery->close();
+            $this->oConBD->close();
+        }
+    }
+
+    /**
+     * Sintaxis procedimientos
+     */
+    public function insertarP()
+    {
+        $json = file_get_contents('./datos.json');
+        $jsonDatos = json_decode($json, true);
+
+        if ($this->conBDP()) {
+            $pQuery = mysqli_stmt_init($this->oConBD);
+            mysqli_stmt_prepare($pQuery, $this->strInsert);
+
+            foreach ($jsonDatos as $id => $valor) {
+
+                mysqli_stmt_bind_param($pQuery, "ssdiis"
+                    , $valor["nombre"]
+                    , $valor["categoria"]
+                    , $valor["precio"]
+                    , $valor["cantidad_vendidos"]
+                    , $valor["en_almacen"]
+                    , $valor["fecha_alta"]
+                );
+                mysqli_stmt_execute($pQuery);
+                $idInsertado = $this->oConBD->insert_id;
+                echo ("Nombre: " . $valor["nombre"] . ", Ultimo ID: " . $idInsertado . "\n");
+            }
+            mysqli_close($this->oConBD);
+        }
+    }
+
+    /**
+     * Sintaxis PDO
+     */
+    public function insertarPDO()
+    {
+        $json = file_get_contents('./datos.json');
+        $jsonDatos = json_decode($json, true);
+        try {
+            $this->strInsert = "
+            insert into resumen_productos
+                (nombre,categoria,precio,cantidad_vendidos,en_almacen,fecha_alta)
+            values
+                (:nombre,:categoria,:precio,:cantidad_vendidos,:en_almacen,:fecha_alta)
+            ";
+            if ($this->conBDPDO()) {
+                $pQuery = $this->oConBD->prepare($this->strInsert);
+                foreach ($jsonDatos as $id => $valor) {
+                    $pQuery->bindParam(':nombre', $valor["nombre"]);
+                    $pQuery->bindParam(':categoria', $valor["categoria"]);
+                    $pQuery->bindParam(':precio', $valor["precio"]);
+                    $pQuery->bindParam(':cantidad_vendidos', $valor["cantidad_vendidos"]);
+                    $pQuery->bindParam(':en_almacen', $valor["en_almacen"]);
+                    $pQuery->bindParam(':fecha_alta', $valor["fecha_alta"]);
+                    $pQuery->execute();
+                    $idInsertado = $this->oConBD->lastInsertId();
+                    echo ("Nombre: " . $valor["nombre"] . ", Ultimo ID: " . $idInsertado . "\n");
+                }
+                $this->oConBD = null;
+            }
+        } catch (PDOException $e) {
+            echo ("MysSQL.insertarPDO -- " . $e->getMessage() . "\n");
+        }
+
+    }
+
 }
