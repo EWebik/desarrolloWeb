@@ -41,6 +41,55 @@ class MySQL
         (?,?,?,?,?,?)
     ";
 
+    
+    private $strSelect = "
+        select
+            id_resumen, nombre, categoria, precio, cantidad_vendidos, en_almacen, fecha_alta
+        from resumen_productos
+        where
+            cantidad_vendidos > ?
+        order by precio desc
+        limit ?
+        ;
+    ";
+
+    private $strSelectPDO = "
+        select
+            id_resumen, nombre, categoria, precio, cantidad_vendidos, en_almacen, fecha_alta
+        from resumen_productos
+        where
+            cantidad_vendidos > :cantidad_vendidos
+        order by precio desc
+        limit :limit
+        ;
+    ";
+
+    private $strUpdate = "
+        update resumen_productos
+        set
+             nombre = ?
+            ,categoria = ?
+        where
+            id_resumen = ?
+    ";
+
+    private $strUpdatePDO = "
+        update resumen_productos
+        set
+             nombre = :nombre
+            ,categoria = :categoria
+        where
+            id_resumen = :id_resumen
+    ";
+
+    private $strDelete = "
+        delete from resumen_productos where id_resumen = ?
+    ";
+
+    private $strDeletePDO = "
+        delete from resumen_productos where id_resumen = :id_resumen
+    ";
+
     public function __construct()
     {
         global $usuarioBD, $passBD, $ipBD, $nombreBD;
@@ -246,4 +295,198 @@ class MySQL
 
     }
 
+    
+    /**
+     * Sintaxis OB
+     * Selecciona un limite de datos segun el criterio
+     */
+    public function consultasOB()
+    {
+        $cantidad = 50;
+        $noProductos = 2;
+        if ($this->conBDOB()) {
+            $pQuery = $this->oConBD->prepare($this->strSelect);
+            $pQuery->bind_param("ii", $cantidad, $noProductos);
+            $pQuery->execute();
+            $productos = $pQuery->get_result();
+            while ($producto = $productos->fetch_assoc()) {
+                printf("id: %s, nombre: %s, categoría: %s, precio: %s, vendidos: %s, en almacen: %s, fecha: %s \n"
+                    , $producto["id_resumen"]
+                    , $producto["nombre"]
+                    , $producto["categoria"]
+                    , $producto["precio"]
+                    , $producto["cantidad_vendidos"]
+                    , $producto["en_almacen"]
+                    , $producto["fecha_alta"]
+                );
+            }
+            $pQuery->close();
+            $this->oConBD->close();
+        }
+    }
+
+    /**
+     * Sintaxis OB
+     * Update
+     */
+    public function consultasOBU()
+    {
+        $id = 1;
+        $nombreP = "producto modificado OB";
+        $catP = "Categoria EWebik OB";
+
+        if ($this->conBDOB()) {
+            $pQuery = $this->oConBD->prepare($this->strUpdate);
+            $pQuery->bind_param("ssi", $nombreP, $catP, $id);
+            $pQuery->execute();
+            $pQuery->close();
+            $this->oConBD->close();
+        }
+    }
+
+    /**
+     * Sintaxis OB
+     * DELETE
+     */
+    public function consultasOBD()
+    {
+        $id = 1;
+        if ($this->conBDOB()) {
+            $pQuery = $this->oConBD->prepare($this->strDelete);
+            $pQuery->bind_param("i", $id);
+            $pQuery->execute();
+            $pQuery->close();
+            $this->oConBD->close();
+        }
+    }
+    /**
+     * Sintaxis P
+     * Selecciona un limite de datos segun el criterio
+     */
+    public function consultasP()
+    {
+        $cantidad = 50;
+        $noProductos = 100;
+        if ($this->conBDP()) {
+            $pQuery = mysqli_stmt_init($this->oConBD);
+            mysqli_stmt_prepare($pQuery, $this->strSelect);
+            mysqli_stmt_bind_param($pQuery, "ii", $cantidad, $noProductos);
+            mysqli_stmt_execute($pQuery);
+            mysqli_stmt_bind_result($pQuery, $id_resumen, $nombre, $categoria, $precio, $cantidad_vendidos, $en_almacen, $fecha_alta);
+            while (mysqli_stmt_fetch($pQuery)) {
+                printf("id: %s, nombre: %s, categoría: %s, precio: %s, vendidos: %s, en almacen: %s, fecha: %s \n"
+                    , $id_resumen, $nombre, $categoria, $precio, $cantidad_vendidos, $en_almacen, $fecha_alta
+                );
+            }
+            mysqli_stmt_close($pQuery);
+            mysqli_close($this->oConBD);
+        }
+    }
+    /**
+     * Sintaxis P
+     * Update
+     */
+    public function consultasPU()
+    {
+        $id = 1;
+        $nombreP = "producto modificado P";
+        $catP = "Categoria EWebik P";
+        if ($this->conBDP()) {
+            $pQuery = mysqli_stmt_init($this->oConBD);
+            mysqli_stmt_prepare($pQuery, $this->strUpdate);
+            mysqli_stmt_bind_param($pQuery, "ssi", $nombreP, $catP, $id);
+            mysqli_stmt_execute($pQuery);
+            mysqli_stmt_close($pQuery);
+            mysqli_close($this->oConBD);
+        }
+    }
+     /**
+     * Sintaxis P
+     * Update
+     */
+    public function consultasPD()
+    {
+        $id = 2;
+        if ($this->conBDP()) {
+            $pQuery = mysqli_stmt_init($this->oConBD);
+            mysqli_stmt_prepare($pQuery, $this->strDelete);
+            mysqli_stmt_bind_param($pQuery, "i", $id);
+            mysqli_stmt_execute($pQuery);
+            mysqli_stmt_close($pQuery);
+            mysqli_close($this->oConBD);
+        }
+    }
+    /**
+     * Sintaxis PDO
+     * Selecciona un limite de datos segun el criterio
+     */
+    public function consultasPDO()
+    {
+        $cantidad = 50;
+        $noProductos = 100;
+        try {
+            if ($this->conBDPDO()) {
+                $pQuery = $this->oConBD->prepare($this->strSelectPDO);
+                $pQuery->bindValue(':cantidad_vendidos', $cantidad, PDO::PARAM_INT);
+                $pQuery->bindValue(':limit', $noProductos, PDO::PARAM_INT);
+                $pQuery->execute();
+                $pQuery->setFetchMode(PDO::FETCH_ASSOC);
+                while ($producto = $pQuery->fetch()) {
+                    printf("id: %s, nombre: %s, categoría: %s, precio: %s, vendidos: %s, en almacen: %s, fecha: %s \n"
+                        , $producto["id_resumen"]
+                        , $producto["nombre"]
+                        , $producto["categoria"]
+                        , $producto["precio"]
+                        , $producto["cantidad_vendidos"]
+                        , $producto["en_almacen"]
+                        , $producto["fecha_alta"]
+                    );
+                }
+                $this->oConBD = null;
+            }
+        } catch (PDOException $e) {
+            echo ("MysSQL.consultasPDO -- " . $e->getMessage() . "\n");
+        }
+    }
+    /**
+     * Sintaxis PDO
+     * Update
+     */
+    public function consultasPDOU()
+    {
+        $id = 1;
+        $nombreP = "producto modificado PDO";
+        $catP = "Categoria EWebik PDO";
+        try {
+            if ($this->conBDPDO()) {
+                $pQuery = $this->oConBD->prepare($this->strUpdatePDO);
+                $pQuery->bindValue(':nombre', $nombreP, PDO::PARAM_STR);
+                $pQuery->bindValue(':categoria', $catP, PDO::PARAM_STR);
+                $pQuery->bindValue(':id_resumen', $id, PDO::PARAM_INT);
+                $pQuery->execute();
+                $this->oConBD = null;
+            }
+        } catch (PDOException $e) {
+            echo ("MysSQL.consultasPDOU -- " . $e->getMessage() . "\n");
+        }
+    }
+
+     /**
+     * Sintaxis PDO
+     * Update
+     */
+    public function consultasPDOD()
+    {
+        $id = 3;
+        try {
+            if ($this->conBDPDO()) {
+                $pQuery = $this->oConBD->prepare($this->strDeletePDO);
+                $pQuery->bindValue(':id_resumen', $id, PDO::PARAM_INT);
+                $pQuery->execute();
+                $this->oConBD = null;
+            }
+        } catch (PDOException $e) {
+            echo ("MysSQL.consultasPDOU -- " . $e->getMessage() . "\n");
+        }
+    }
 }
