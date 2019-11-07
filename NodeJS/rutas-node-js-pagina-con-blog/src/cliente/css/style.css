@@ -1,0 +1,117 @@
+/***************************NAV**********************************/
+.nav-scroll {
+  background-color: transparent !important;
+}
+.nav-scroll a {
+  color: #ffffff !important;
+}
+.nav-scroll-contenido {
+  background-color: #ffffff !important;
+}
+.nav-scroll-contenido a {
+  color: rgba(0, 0, 0, 0.5) !important;
+}
+/*****************************************************************/
+/***************************Home**********************************/
+.ewk-img-fondo {
+  position: relative;
+  min-height: 500px;
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.ewk-cont-img-carousel {
+  height: 100vh;
+}
+@media (max-width: 627px) {
+  .ewk-cont-img-carousel {
+    height: auto;
+  }
+}
+.ewk-cont-img-carousel img {
+  width: 100%;
+}
+.ewk-sombra {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  left: 50%;
+  top: 50%;
+  -moz-transform: translate(-50%, -50%);
+  -o-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+.ewk-galeria-post {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.ewk-galeria-post .card {
+  width: 33.33%;
+  height: auto;
+  margin: 0 auto;
+}
+@media (max-width: 627px) {
+  .ewk-galeria-post {
+    flex-direction: column;
+  }
+  .ewk-galeria-post .card {
+    width: 100%;
+  }
+}
+.card-imagen {
+  position: relative;
+  overflow: hidden !important;
+  margin: 0 auto;
+}
+.card-imagen img {
+  width: 100%;
+  height: auto;
+}
+.card-imagen img:hover {
+  transform: scale(1.2) !important;
+  -ms-transform: scale(1.2) !important;
+  -moz-transform: scale(1.2) !important;
+  -webkit-transform: scale(1.2) !important;
+  -o-transform: scale(1.2) !important;
+  transition-duration: 0.5s !important;
+  -ms-transition-duration: 0.5s !important;
+  -moz-transition-duration: 0.5s !important;
+  -webkit-transition-duration: 0.5s !important;
+  -o-transition-duration: 0.5s !important;
+}
+/*****************************************************************/
+/***************************footer**********************************/
+.ewk-footer {
+  background-color: #029acf;
+}
+.ewk-img-media {
+  width: 50px;
+  height: auto;
+}
+/*****************************************************************/
+/***************************Contacto**********************************/
+.ewk-contenido{
+    margin-top: 150px;
+}
+/*****************************************************************/
+/***************************blog**********************************/
+.ewk-galeria-blog {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.ewk-galeria-side-blog{
+  display: flex;
+  flex-direction: column;
+}
+.ewk-galeria-side-blog .card {
+  width: 100%;
+  height: auto;
+  margin: 0 auto;
+}
+/*****************************************************************/
