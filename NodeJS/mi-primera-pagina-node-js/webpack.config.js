@@ -19,7 +19,14 @@ module.exports = {
     },
     plugins:[
         new htmlWebpackPlugin({
-            template:'./src/cliente/index.html'
+            filename: 'index.html',
+            template:'./src/cliente/index.html',
+            chunks: ['main']
+        }),
+        new htmlWebpackPlugin({
+            filename: 'contacto.html',
+            template:'./src/cliente/contacto.html',
+            chunks: ['exampleEntry']
         })
     ]
 };
