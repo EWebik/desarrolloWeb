@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Existen 3 maneras de trabajar PHP con MySQL
  * Orientada a objetos (OB)
@@ -26,7 +27,7 @@ class MySQL
         )
     ";
 
-  
+
     public $strInsert_old = "
 		insert into resumen_productos
 			(nombre,categoria,precio,cantidad_vendidos,en_almacen,fecha_alta)
@@ -40,8 +41,6 @@ class MySQL
     values
         (?,?,?,?,?,?)
     ";
-
-    
     private $strSelect = "
         select
             id_resumen, nombre, categoria, precio, cantidad_vendidos, en_almacen, fecha_alta
@@ -195,8 +194,6 @@ class MySQL
             echo "MySQL.execStrQueryPDO --Error-- " . $e->getMessage() . "\n";
         }
     }
-
-    
     /**
      * Sintaxis Objetos
      * file_get_contents - permite leer un json
@@ -212,13 +209,14 @@ class MySQL
             //Disminuye el riesgo de inyección sql
             $pQuery = $this->oConBD->prepare($this->strInsert);
             foreach ($jsonDatos as $id => $valor) {
-                $pQuery->bind_param("ssdiis"
-                    , $valor["nombre"]
-                    , $valor["categoria"]
-                    , $valor["precio"]
-                    , $valor["cantidad_vendidos"]
-                    , $valor["en_almacen"]
-                    , $valor["fecha_alta"]
+                $pQuery->bind_param(
+                    "ssdiis",
+                    $valor["nombre"],
+                    $valor["categoria"],
+                    $valor["precio"],
+                    $valor["cantidad_vendidos"],
+                    $valor["en_almacen"],
+                    $valor["fecha_alta"]
                 );
                 $pQuery->execute();
                 //comprobando insert recibiendo el ultimo ID
@@ -244,13 +242,15 @@ class MySQL
 
             foreach ($jsonDatos as $id => $valor) {
 
-                mysqli_stmt_bind_param($pQuery, "ssdiis"
-                    , $valor["nombre"]
-                    , $valor["categoria"]
-                    , $valor["precio"]
-                    , $valor["cantidad_vendidos"]
-                    , $valor["en_almacen"]
-                    , $valor["fecha_alta"]
+                mysqli_stmt_bind_param(
+                    $pQuery,
+                    "ssdiis",
+                    $valor["nombre"],
+                    $valor["categoria"],
+                    $valor["precio"],
+                    $valor["cantidad_vendidos"],
+                    $valor["en_almacen"],
+                    $valor["fecha_alta"]
                 );
                 mysqli_stmt_execute($pQuery);
                 $idInsertado = $this->oConBD->insert_id;
@@ -292,10 +292,9 @@ class MySQL
         } catch (PDOException $e) {
             echo ("MysSQL.insertarPDO -- " . $e->getMessage() . "\n");
         }
-
     }
 
-    
+
     /**
      * Sintaxis OB
      * Selecciona un limite de datos segun el criterio
@@ -310,14 +309,15 @@ class MySQL
             $pQuery->execute();
             $productos = $pQuery->get_result();
             while ($producto = $productos->fetch_assoc()) {
-                printf("id: %s, nombre: %s, categoría: %s, precio: %s, vendidos: %s, en almacen: %s, fecha: %s \n"
-                    , $producto["id_resumen"]
-                    , $producto["nombre"]
-                    , $producto["categoria"]
-                    , $producto["precio"]
-                    , $producto["cantidad_vendidos"]
-                    , $producto["en_almacen"]
-                    , $producto["fecha_alta"]
+                printf(
+                    "id: %s, nombre: %s, categoría: %s, precio: %s, vendidos: %s, en almacen: %s, fecha: %s \n",
+                    $producto["id_resumen"],
+                    $producto["nombre"],
+                    $producto["categoria"],
+                    $producto["precio"],
+                    $producto["cantidad_vendidos"],
+                    $producto["en_almacen"],
+                    $producto["fecha_alta"]
                 );
             }
             $pQuery->close();
@@ -374,8 +374,15 @@ class MySQL
             mysqli_stmt_execute($pQuery);
             mysqli_stmt_bind_result($pQuery, $id_resumen, $nombre, $categoria, $precio, $cantidad_vendidos, $en_almacen, $fecha_alta);
             while (mysqli_stmt_fetch($pQuery)) {
-                printf("id: %s, nombre: %s, categoría: %s, precio: %s, vendidos: %s, en almacen: %s, fecha: %s \n"
-                    , $id_resumen, $nombre, $categoria, $precio, $cantidad_vendidos, $en_almacen, $fecha_alta
+                printf(
+                    "id: %s, nombre: %s, categoría: %s, precio: %s, vendidos: %s, en almacen: %s, fecha: %s \n",
+                    $id_resumen,
+                    $nombre,
+                    $categoria,
+                    $precio,
+                    $cantidad_vendidos,
+                    $en_almacen,
+                    $fecha_alta
                 );
             }
             mysqli_stmt_close($pQuery);
@@ -400,7 +407,7 @@ class MySQL
             mysqli_close($this->oConBD);
         }
     }
-     /**
+    /**
      * Sintaxis P
      * Update
      */
@@ -432,14 +439,15 @@ class MySQL
                 $pQuery->execute();
                 $pQuery->setFetchMode(PDO::FETCH_ASSOC);
                 while ($producto = $pQuery->fetch()) {
-                    printf("id: %s, nombre: %s, categoría: %s, precio: %s, vendidos: %s, en almacen: %s, fecha: %s \n"
-                        , $producto["id_resumen"]
-                        , $producto["nombre"]
-                        , $producto["categoria"]
-                        , $producto["precio"]
-                        , $producto["cantidad_vendidos"]
-                        , $producto["en_almacen"]
-                        , $producto["fecha_alta"]
+                    printf(
+                        "id: %s, nombre: %s, categoría: %s, precio: %s, vendidos: %s, en almacen: %s, fecha: %s \n",
+                        $producto["id_resumen"],
+                        $producto["nombre"],
+                        $producto["categoria"],
+                        $producto["precio"],
+                        $producto["cantidad_vendidos"],
+                        $producto["en_almacen"],
+                        $producto["fecha_alta"]
                     );
                 }
                 $this->oConBD = null;
@@ -470,8 +478,7 @@ class MySQL
             echo ("MysSQL.consultasPDOU -- " . $e->getMessage() . "\n");
         }
     }
-
-     /**
+    /**
      * Sintaxis PDO
      * Update
      */
@@ -489,4 +496,166 @@ class MySQL
             echo ("MysSQL.consultasPDOU -- " . $e->getMessage() . "\n");
         }
     }
+
+    /**
+     * Sintaxis Objetos
+     * Executando Procedimiento almacenado
+     */
+    public function execSPOB()
+    {
+        if ($this->conBDOB()) {
+            $pQuery = $this->oConBD->prepare(" call SP_INDICADORES(); ");
+            $pQuery->execute();
+            $indicadores = $pQuery->get_result();
+            while ($indicador = $indicadores->fetch_assoc()) {
+                printf(
+                    "Productos totales: %s, Productos en almacen: %s, Ingresos totales: %s \n",
+                    $indicador["PT"],
+                    $indicador["PA"],
+                    $indicador["IT"]
+
+                );
+            }
+            $pQuery->close();
+            $this->oConBD->close();
+        }
+    }
+
+    /**
+     * Sintaxis procedimientos
+     * Executando Procedimiento almacenado
+     */
+    public function execSPP()
+    {
+        if ($this->conBDP()) {
+            $pQuery = mysqli_stmt_init($this->oConBD);
+            mysqli_stmt_prepare($pQuery, " call SP_INDICADORES(); ");
+            mysqli_stmt_execute($pQuery);
+            mysqli_stmt_bind_result($pQuery, $PT, $PA, $IT);
+            while (mysqli_stmt_fetch($pQuery)) {
+                printf(
+                    "Productos totales: %s, Productos en almacen: %s, Ingresos totales: %s \n",
+                    $PT,
+                    $PA,
+                    $IT
+                );
+            }
+            mysqli_stmt_close($pQuery);
+            mysqli_close($this->oConBD);
+        }
+    }
+
+    /**
+     * Sintaxis PDO
+     * Executando Procedimiento almacenado
+     */
+    public function execSPPDO()
+    {
+        try {
+            if ($this->conBDPDO()) {
+                $pQuery = $this->oConBD->prepare(" call SP_INDICADORES(); ");
+                $pQuery->execute();
+                $pQuery->setFetchMode(PDO::FETCH_ASSOC);
+                while ($indicador = $pQuery->fetch()) {
+                    printf(
+                        "Productos totales: %s, Productos en almacen: %s, Ingresos totales: %s \n",
+                        $indicador["PT"],
+                        $indicador["PA"],
+                        $indicador["IT"]
+
+                    );
+                }
+                $this->oConBD = null;
+            }
+        } catch (PDOException $e) {
+            echo ("MysSQL.execSPPDO -- " . $e->getMessage() . "\n");
+        }
+    }
+
+    /**
+     * Sintaxis Objetos
+     * Executando Procedimiento almacenado con parámetros
+     */
+    public function execSPParametrosOB()
+    {
+        $nombre = "zapatos";
+        $categoria = "calzado";
+        $precio = 500;
+        $cantidad_vendidos = 20;
+        $en_almacen = 30;
+        $fecha_alta = "2020-01-30";
+        if ($this->conBDOB()) {
+            $pQuery = $this->oConBD->prepare(" call SP_INSERTAR_PRODUCTO(?,?,?,?,?,?); ");
+            $pQuery->bind_param("ssdiis", $nombre, $categoria, $precio, $cantidad_vendidos, $en_almacen,  $fecha_alta);
+            $pQuery->execute();
+            $indicadores = $pQuery->get_result();
+            while ($indicador = $indicadores->fetch_assoc()) {
+                printf("Producto insertado con ID: %s \n", $indicador["ultimo_id"]);
+            }
+            $pQuery->close();
+            $this->oConBD->close();
+        }
+    }
+
+    /**
+     * Sintaxis procedimientos
+     * Executando Procedimiento almacenado con parámetros
+     */
+    public function execSPParametrosP()
+    {
+        $nombre = "zapatos procedimientos";
+        $categoria = "calzado";
+        $precio = 500;
+        $cantidad_vendidos = 20;
+        $en_almacen = 30;
+        $fecha_alta = "2020-01-30";
+
+        if ($this->conBDP()) {
+            $pQuery = mysqli_stmt_init($this->oConBD);
+            mysqli_stmt_prepare($pQuery, " call SP_INSERTAR_PRODUCTO(?,?,?,?,?,?); ");
+            mysqli_stmt_bind_param($pQuery, "ssdiis", $nombre, $categoria, $precio, $cantidad_vendidos, $en_almacen,  $fecha_alta);
+            mysqli_stmt_execute($pQuery);
+            mysqli_stmt_bind_result($pQuery, $ultimo_id);
+            while (mysqli_stmt_fetch($pQuery)) {
+                printf("Producto insertado con ID: %s \n", $ultimo_id);
+            }
+            mysqli_stmt_close($pQuery);
+            mysqli_close($this->oConBD);
+        }
+    }
+
+    /**
+     * Sintaxis PDO
+     * Executando Procedimiento almacenado con parámetros
+     */
+    public function execSPParametrosPDO()
+    {
+        $nombre = "zapatos PDO";
+        $categoria = "calzado";
+        $precio = 500;
+        $cantidad_vendidos = 20;
+        $en_almacen = 30;
+        $fecha_alta = "2020-01-30";
+        try {
+            if ($this->conBDPDO()) {
+                $pQuery = $this->oConBD->prepare(" call SP_INSERTAR_PRODUCTO(:nombre,:categoria,:precio,:cantidad_vendidos,:en_almacen,:fecha_alta); ");
+                $pQuery->bindParam(':nombre', $nombre);
+                $pQuery->bindParam(':categoria', $categoria);
+                $pQuery->bindParam(':precio', $precio);
+                $pQuery->bindParam(':cantidad_vendidos', $cantidad_vendidos);
+                $pQuery->bindParam(':en_almacen', $en_almacen);
+                $pQuery->bindParam(':fecha_alta', $fecha_alta);
+                $pQuery->execute();
+                $pQuery->setFetchMode(PDO::FETCH_ASSOC);
+                while ($indicador = $pQuery->fetch()) {
+                    printf("Producto insertado con ID: %s \n", $indicador["ultimo_id"]);
+                }
+                $this->oConBD = null;
+            }
+        } catch (PDOException $e) {
+            echo ("MysSQL.execSPParametrosPDO -- " . $e->getMessage() . "\n");
+        }
+    }
+
+
 }
