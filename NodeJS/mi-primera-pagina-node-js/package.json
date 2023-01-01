@@ -11,17 +11,17 @@
   "license": "ISC",
   "dependencies": {
     "axios": "^0.18.0",
-    "css-loader": "^2.1.0",
+    "css-loader": "^6.7.3",
     "express": "^4.16.4",
-    "html-webpack-plugin": "^3.2.0",
+    "html-webpack-plugin": "^5.5.0",
     "mysql": "^2.16.0",
     "nodemailer": "^5.1.1",
     "nodemon": "^1.18.9",
-    "style-loader": "^0.23.1",
-    "webpack": "^4.28.4",
+    "style-loader": "^3.3.1",
+    "webpack": "^5.75.0",
     "webpack-dev-middleware": "^3.5.0"
   },
   "devDependencies": {
-    "webpack-cli": "^3.2.1"
+    "webpack-cli": "^5.0.1"
   }
 }
